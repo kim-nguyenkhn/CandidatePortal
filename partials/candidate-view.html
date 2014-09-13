@@ -1,0 +1,20 @@
+<!-- Table to display single candidate -->
+<table>
+    <thead>
+        <tr>
+            <th width="100">ID</th>
+            <th>Name</th>
+            <th>Email</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td ng-bind="id"></td>
+            <td ng-bind="name"></td>
+            <td ng-bind="email"></td>
+        </tr>
+    </tbody>
+</table>
+
+<!-- Button to Edit Movie ======================================= -->
+<div class="button" ui-sref="editCandidate({id:candidate._id})">Edit</div>

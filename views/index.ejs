@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html ng-app="candidateApp">
+  <head>
+    <title>Candidate Portal v0.1</title>
+        <link rel='stylesheet' href="/stylesheets/style.css"/>
+        <link rel="stylesheet" href="/stylesheets/foundation.css"/>
+        <link rel="stylesheet" href="/stylesheets/general_foundicons.css"/>
+      <script src="/javascripts/angular.js"></script>
+      <script src="/javascripts/angular-resource.js"></script>
+      <script src="/javascripts/angular-ui-router.js"></script>
+      <script src="/routes/candidates.js"></script>
+      <script>
+          var candidateApp = angular.module('candidateApp', ['ui.router', 'ngResource']);
+
+          candidateApp.config(function($stateProvider, $urlRouterProvider) {
+                $stateProvider.state('candidates', {  // State for showing all candidates
+                    url: '/candidates',
+                    templateUrl: 'partials/candidates.html',
+                    controller: 'ListCtrl'
+                }).state('viewCandidate', { // state for showing single candidate
+                    url: '/candidates/:id/view',
+                    templateUrl: 'partials/candidate-view.html',
+                    controller: 'ViewCtrl'
+                }).state('newCandidate', { // state for adding a new candidate
+                    url: '/candidates/new',
+                    templateUrl: 'partials/candidate-add.html',
+                    controller: 'CreateCtrl'
+                }).state('editCandidate', { // state for updating a candidate
+                    url: '/candidates/:id/edit',
+                    templateUrl: 'partials/candidate-edit.html',
+                    controller: 'EditCtrl'
+                });
+            }).run(function($state){
+                $state.go('candidates');    // go to candidates state when app starts
+            });
+
+          candidateApp.controller('ListCtrl', function($scope, $state, popupService, $window, Candidate) {
+              $scope.candidates = Candidate.query();   // fetches all candidates
+                                                       // issues GET to /candidates
+
+              $scope.deleteCandidate = function(candidate) {   // deletes a candidate
+                                                       // issues DELETE to /candidates/:id
+                  if (popupService.showPopup('Are you sure you want to delete?')) {
+                      candidate.$delete(function() {
+                          $window.location.href = '';   //redirect to home
+                      })
+                  }
+              }
+          }).controller('ViewCtrl', function($scope, $stateParams, Candidate) {
+              $scope.candidate = Candidate.get({ id: $stateParams.id });    //gets a single candidate
+                                                                        // issues GET to /candidates/:id
+              $scope.message = "View One Button";
+          }).controller('CreateCtrl', function($scope, $state, $stateParams, Candidate) {
+              $scope.candidate = new Candidate();   // create new Candidate instance
+                                                    // properties set by ng-model in UI view
+
+              $scope.addCandidate = function() {    // Creates a new movie
+                                                    // issues POST to /candidates
+                $scope.candidate.$save(function() {
+                    $state.go('candidates');        // On success, go back home
+                });
+              };
+              $scope.message = "Create Button";
+          }).controller('EditCtrl', function($scope, $state, $stateParams, Candidate) {
+              $scope.updateCandidate = function() {     // Updated the candidate
+                                                        // Issues PUT to /candidates/:id
+                  $scope.candidate.$update(function() {
+                      $state.go('candidates');      // On success, go back home
+                  });
+              };
+
+              $scope.loadCandidate = function() {       // Issues GET request to /candidates/:id
+                                                        // To get a candidate to edit
+                  $scope.candidate = Candidate.get({ id: $stateParams.id });
+              };
+
+              $scope.loadCandidate();       // Load a movie which can be edited on UI
+              $scope.message = "Edit Button";
+          });
+
+          candidateApp.factory('Candidate', function($resource) {
+              return $resource('http://localhost:3000/candidates/:id', { id: '@_id' }, {
+                  update: {
+                      method: "PUT"
+                  }
+              });
+          }).service('popupService', function($window) {
+              this.showPopup = function(message) {
+                  return $window.confirm(message);
+              }
+          })
+      </script>
+  </head>
+  <body>
+
+    <div class="panel callout">Hello World from Candidate Portal!</div>
+
+    <div class="container">
+        <div ui-view></div>
+    </div>
+
+  </body>
+</html>

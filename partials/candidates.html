@@ -1,0 +1,18 @@
+<!-- candidates.html -->
+
+<div class="button [large]" ui-sref="newCandidate">Add New Candidate</div>
+
+<table class="candidateTable">
+    <tr>
+        <td><h3>All Candidates</h3></td>
+        <td></td>
+    </tr>
+    <tr ng-repeat="candidate in candidates">
+        <td ng-bind="name"></td>
+        <td ng-bind="email"></td>
+        <td>
+            <div class="button" ui-sref="viewCandidate({id:candidate._id})">View</div>
+            <div class="button" ng-click="deleteCandidate(candidate)">Delete</div>
+        </td>
+    </tr>
+</table>
