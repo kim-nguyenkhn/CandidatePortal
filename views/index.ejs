@@ -2,38 +2,44 @@
 <html ng-app="candidateApp">
   <head>
     <title>Candidate Portal v0.1</title>
-        <link rel='stylesheet' href="/stylesheets/style.css"/>
-        <link rel="stylesheet" href="/stylesheets/foundation.css"/>
-        <link rel="stylesheet" href="/stylesheets/general_foundicons.css"/>
+      <link rel="stylesheet" href="/stylesheets/foundation.css"/>
+      <link rel='stylesheet' href="/stylesheets/style.css"/>
+
+      <link rel="stylesheet" href="/stylesheets/general_foundicons.css"/>
+
       <script src="/javascripts/angular.js"></script>
       <script src="/javascripts/angular-resource.js"></script>
       <script src="/javascripts/angular-ui-router.js"></script>
-      <script src="/routes/candidates.js"></script>
       <script>
+          /* This script will go into candidateApp.js ========================================== */
           var candidateApp = angular.module('candidateApp', ['ui.router', 'ngResource']);
 
+          /* CandidateApp Config (UI-Router) ========================================= */
           candidateApp.config(function($stateProvider, $urlRouterProvider) {
+                $urlRouterProvider.otherwise('/candidates');
+
                 $stateProvider.state('candidates', {  // State for showing all candidates
                     url: '/candidates',
-                    templateUrl: 'partials/candidates.html',
+                    templateUrl: 'candidates.html',
                     controller: 'ListCtrl'
                 }).state('viewCandidate', { // state for showing single candidate
                     url: '/candidates/:id/view',
-                    templateUrl: 'partials/candidate-view.html',
+                    templateUrl: 'candidate-view.html',
                     controller: 'ViewCtrl'
                 }).state('newCandidate', { // state for adding a new candidate
                     url: '/candidates/new',
-                    templateUrl: 'partials/candidate-add.html',
+                    templateUrl: 'candidate-add.html',
                     controller: 'CreateCtrl'
                 }).state('editCandidate', { // state for updating a candidate
                     url: '/candidates/:id/edit',
-                    templateUrl: 'partials/candidate-edit.html',
+                    templateUrl: 'candidate-edit.html',
                     controller: 'EditCtrl'
                 });
             }).run(function($state){
                 $state.go('candidates');    // go to candidates state when app starts
             });
 
+          /* CandidateApp Controllers ========================================= */
           candidateApp.controller('ListCtrl', function($scope, $state, popupService, $window, Candidate) {
               $scope.candidates = Candidate.query();   // fetches all candidates
                                                        // issues GET to /candidates
@@ -78,6 +84,7 @@
               $scope.message = "Edit Button";
           });
 
+          /* CandidateApp Services ========================================= */
           candidateApp.factory('Candidate', function($resource) {
               return $resource('http://localhost:3000/candidates/:id', { id: '@_id' }, {
                   update: {
@@ -92,9 +99,36 @@
       </script>
   </head>
   <body>
+      <!-- Navigation Bar ================================ -->
+      <nav class="top-bar" data-topbar role="navigation">
+          <ul class="title-area">
+              <li class="name">
+                  <h1><a href="#">Candidate Portal v0.1</a></h1>
+              </li>
+              <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
+              <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
+          </ul>
 
+          <section class="top-bar-section">
+              <!-- Right Nav Section -->
+              <ul class="right">
+                  <li class="active"><a href="#">Cats</a></li>
+                  <li class="has-dropdown">
+                      <a href="#">Dogs</a>
+                      <ul class="dropdown">
+                          <li><a href="#">Zebras</a></li>
+                          <li class="active"><a href="#">Cats</a></li>
+                      </ul>
+                  </li>
+              </ul>
+          </section>
+      </nav>
+
+    <!-- Panel displaying a message  ================================ -->
     <div class="panel callout">Hello World from Candidate Portal!</div>
 
+
+    <!-- Content will be injected here, in ui-view -->
     <div class="container">
         <div ui-view></div>
     </div>

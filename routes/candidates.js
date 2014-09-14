@@ -10,6 +10,8 @@ var router = express.Router();
 var mongoose = require('mongoose');
 var ObjectId = mongoose.Types.ObjectId;
 mongoose.connect('mongodb://localhost/test');
+
+/* Setting up the Mongoose Model ===========  */
 var CandidateModel = mongoose.model('Candidate', {
     name: {required: true, type: String},
     email: {required: true, type: String, unique: true }
@@ -40,9 +42,8 @@ router.get('/candidates', function(req, res) {
         else res.json(200, results);
     });
 });
+
 router.post('/candidates', function(req, res) {
-    // todo: TEST CASE -- if email already exists.
-    console.log(req.body);
     (new CandidateModel({
         name: req.body.name,
         email: req.body.email
@@ -61,7 +62,7 @@ router.put('/candidates/:id', function(req, res) {
 });
 
 router.delete('/candidates/:id', function(req, res) {
-    CandidateModel.findByIdAndRemove(req.params.id, function(err, results) {
+    CandidateModel.findByIdAndRemove( req.params.id, function(err, results) {
         if (err) res.json('500', 'Something went wrong with .findByIdAndRemove');
         else res.json(200, results);
     });
