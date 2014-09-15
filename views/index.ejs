@@ -4,128 +4,26 @@
     <title>Candidate Portal v0.1</title>
       <link rel="stylesheet" href="/stylesheets/foundation.css"/>
       <link rel='stylesheet' href="/stylesheets/style.css"/>
-
-      <link rel="stylesheet" href="/stylesheets/general_foundicons.css"/>
-
-      <script src="/javascripts/angular.js"></script>
-      <script src="/javascripts/angular-resource.js"></script>
-      <script src="/javascripts/angular-ui-router.js"></script>
-      <script>
-          /* This script will go into candidateApp.js ========================================== */
-          var candidateApp = angular.module('candidateApp', ['ui.router', 'ngResource']);
-
-          /* CandidateApp Config (UI-Router) ========================================= */
-          candidateApp.config(function($stateProvider, $urlRouterProvider) {
-                $urlRouterProvider.otherwise('/candidates');
-
-                $stateProvider.state('candidates', {  // State for showing all candidates
-                    url: '/candidates',
-                    templateUrl: 'candidates.html',
-                    controller: 'ListCtrl'
-                }).state('viewCandidate', { // state for showing single candidate
-                    url: '/candidates/:id/view',
-                    templateUrl: 'candidate-view.html',
-                    controller: 'ViewCtrl'
-                }).state('newCandidate', { // state for adding a new candidate
-                    url: '/candidates/new',
-                    templateUrl: 'candidate-add.html',
-                    controller: 'CreateCtrl'
-                }).state('editCandidate', { // state for updating a candidate
-                    url: '/candidates/:id/edit',
-                    templateUrl: 'candidate-edit.html',
-                    controller: 'EditCtrl'
-                });
-            }).run(function($state){
-                $state.go('candidates');    // go to candidates state when app starts
-            });
-
-          /* CandidateApp Controllers ========================================= */
-          candidateApp.controller('ListCtrl', function($scope, $state, popupService, $window, Candidate) {
-              $scope.candidates = Candidate.query();   // fetches all candidates
-                                                       // issues GET to /candidates
-
-              $scope.deleteCandidate = function(candidate) {   // deletes a candidate
-                                                       // issues DELETE to /candidates/:id
-                  if (popupService.showPopup('Are you sure you want to delete?')) {
-                      candidate.$delete(function() {
-                          $window.location.href = '';   //redirect to home
-                      })
-                  }
-              }
-          }).controller('ViewCtrl', function($scope, $stateParams, Candidate) {
-              $scope.candidate = Candidate.get({ id: $stateParams.id });    //gets a single candidate
-                                                                        // issues GET to /candidates/:id
-              $scope.message = "View One Button";
-          }).controller('CreateCtrl', function($scope, $state, $stateParams, Candidate) {
-              $scope.candidate = new Candidate();   // create new Candidate instance
-                                                    // properties set by ng-model in UI view
-
-              $scope.addCandidate = function() {    // Creates a new movie
-                                                    // issues POST to /candidates
-                $scope.candidate.$save(function() {
-                    $state.go('candidates');        // On success, go back home
-                });
-              };
-              $scope.message = "Create Button";
-          }).controller('EditCtrl', function($scope, $state, $stateParams, Candidate) {
-              $scope.updateCandidate = function() {     // Updated the candidate
-                                                        // Issues PUT to /candidates/:id
-                  $scope.candidate.$update(function() {
-                      $state.go('candidates');      // On success, go back home
-                  });
-              };
-
-              $scope.loadCandidate = function() {       // Issues GET request to /candidates/:id
-                                                        // To get a candidate to edit
-                  $scope.candidate = Candidate.get({ id: $stateParams.id });
-              };
-
-              $scope.loadCandidate();       // Load a movie which can be edited on UI
-              $scope.message = "Edit Button";
-          });
-
-          /* CandidateApp Services ========================================= */
-          candidateApp.factory('Candidate', function($resource) {
-              return $resource('http://localhost:3000/candidates/:id', { id: '@_id' }, {
-                  update: {
-                      method: "PUT"
-                  }
-              });
-          }).service('popupService', function($window) {
-              this.showPopup = function(message) {
-                  return $window.confirm(message);
-              }
-          })
-      </script>
   </head>
   <body>
       <!-- Navigation Bar ================================ -->
       <nav class="top-bar" data-topbar role="navigation">
           <ul class="title-area">
               <li class="name">
-                  <h1><a href="#">Candidate Portal v0.1</a></h1>
+                  <h1><a ui-sref="candidates">Candidate Portal v0.1</a></h1>
               </li>
               <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
-              <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
+              <li class="toggle-topbar menu-icon"><a ui-sref="candidates"><span></span></a></li>
           </ul>
 
           <section class="top-bar-section">
               <!-- Right Nav Section -->
               <ul class="right">
-                  <li class="active"><a href="#">Cats</a></li>
-                  <li class="has-dropdown">
-                      <a href="#">Dogs</a>
-                      <ul class="dropdown">
-                          <li><a href="#">Zebras</a></li>
-                          <li class="active"><a href="#">Cats</a></li>
-                      </ul>
-                  </li>
+                  <li class=""><a ui-sref="newCandidate">New Candidate</a></li>
+                  <li class=""><a href="#">Logout</a></li>
               </ul>
           </section>
       </nav>
-
-    <!-- Panel displaying a message  ================================ -->
-    <div class="panel callout">Hello World from Candidate Portal!</div>
 
 
     <!-- Content will be injected here, in ui-view -->
@@ -133,5 +31,14 @@
         <div ui-view></div>
     </div>
 
+      <!-- Angular Library -->
+      <script src="/javascripts/angular/angular.js"></script>
+      <script src="/javascripts/angular/angular-resource.js"></script>
+      <script src="/javascripts/angular/angular-ui-router.js"></script>
+
+      <!-- Angular Scripts (custom ui-routes, controllers & services)-->
+      <script src="/javascripts/candidateApp.js"></script>
+      <script src="/javascripts/controllers.js"></script>
+      <script src="/javascripts/services.js"></script>
   </body>
 </html>

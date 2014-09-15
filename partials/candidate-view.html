@@ -1,17 +1,22 @@
 <!-- Table to display single candidate -->
+
+<!-- Panel displaying a message  ================================ -->
+<div class="panel callout">Viewing details for: <span class="can_name" ng-bind="candidate.name"></span></div>
+
+<!-- Table to display the single candidate -->
 <table>
     <thead>
         <tr>
-            <th width="100">ID</th>
+            <th>MongoID</th>
             <th>Name</th>
             <th>Email</th>
         </tr>
     </thead>
     <tbody>
         <tr>
-            <td ng-bind="id"></td>
-            <td ng-bind="name"></td>
-            <td ng-bind="email"></td>
+            <td ng-bind="candidate._id"></td>
+            <td ng-bind="candidate.name"></td>
+            <td ng-bind="candidate.email"></td>
         </tr>
     </tbody>
 </table>

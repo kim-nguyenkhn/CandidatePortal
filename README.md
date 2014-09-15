@@ -1,10 +1,7 @@
 ### Candidate Portal (pending)
 
               List of things pending           
-    Overall look and feel of the site (Foundation) 
-    UI-states (angular-ui-router.js)               
-    Full MongoDB functionality (mongoose)          
-    Polishing up NodeJS API                        
-    And more ...                                   
-
-    
+    Responsive Web Design & cleaning up appearance (Foundation)             
+    User authentication (PassportJS)
+    Shorten the MongoID to much fewer characters (candidate-view.html & controllers.js)
+    General documentation throughout the app

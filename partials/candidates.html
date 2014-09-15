@@ -1,18 +1,29 @@
 <!-- candidates.html -->
 
+<!-- Panel displaying a message  ================================ -->
+<div class="panel callout">Hello World from Candidate Portal!</div>
+
+<!-- Button to add a new candidate ============================== -->
 <div class="button [large] btn_add" ui-sref="newCandidate">Add New Candidate</div>
 
+<!-- Display for all candidates ================================= -->
 <table class="candidateTable">
     <tr>
         <td><h3>All Candidates</h3></td>
         <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td><h5>Full Name</h5></td>
+        <td><h5>Email Address</h5></td>
+        <td><h5>Options</h5></td>
     </tr>
     <tr ng-repeat="candidate in candidates">
-        <td ng-bind="name"></td>
-        <td ng-bind="email"></td>
+        <td ng-bind="candidate.name"></td>
+        <td ng-bind="candidate.email"></td>
         <td>
-            <div class="button" ui-sref="viewCandidate({id:candidate._id})">View</div>
-            <div class="button" ng-click="deleteCandidate(candidate)">Delete</div>
+            <div class="button btn_view" ui-sref="viewCandidate({id:candidate._id})">View</div>
+            <div class="button btn_delete" ng-click="deleteCandidate(candidate)">Delete</div>
         </td>
     </tr>
 </table>

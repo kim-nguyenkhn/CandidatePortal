@@ -1,17 +1,21 @@
 <!-- candidate-edit.html -->
 
+<!-- Panel displaying a message  ================================ -->
+<div class="panel callout">Updating: <span class="can_name" ng-bind="candidate.name"></span></div>
+
+<!-- Form to edit a single candidate ============================ -->
 <form role="form" ng-submit="updateCandidate()">
     <div class="row">
         <label>Name
-            <input type="text" placeholder="Full name"/>
+            <input ng-model="candidate.name" type="text" placeholder="Full name"/>
         </label>
     </div>
     <div class="row">
         <label>Email
-            <input type="email" placeholder="Email address"/>
+            <input ng-model="candidate.email" type="email" placeholder="Email address"/>
         </label>
     </div>
     <div class="row">
-        <input type="submit" class="button" value="Save"/>
+        <input type="submit" class="button btn_edit" value="Save"/>
     </div>
 </form>
