@@ -30,7 +30,7 @@ angular.module('candidateControllers', [])
     $scope.addCandidate = function() {    // Creates a new candidate
         // issues POST to /candidates
         $scope.candidate.$save(function() {
-            $state.go('candidates');        // On success, go back home
+            $state.reload('candidates');        // On success, go back home
         });
     };
 
@@ -50,6 +50,6 @@ angular.module('candidateControllers', [])
         $scope.candidate = Candidate.get({ id: $stateParams.id });
     };
 
-    $scope.loadCandidate();       // Load a movie which can be edited on UI
+    $scope.loadCandidate();       // Load a candidate which can be edited on UI
 
 });

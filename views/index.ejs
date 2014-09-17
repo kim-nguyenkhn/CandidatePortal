@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html ng-app="candidateApp">
   <head>
-    <title>Candidate Portal v0.1</title>
+    <title>Candidate Portal v0.2</title>
       <link rel="stylesheet" href="/stylesheets/foundation.css"/>
       <link rel='stylesheet' href="/stylesheets/style.css"/>
   </head>
@@ -20,7 +20,6 @@
               <!-- Right Nav Section -->
               <ul class="right">
                   <li class=""><a ui-sref="newCandidate">New Candidate</a></li>
-                  <li class=""><a href="#">Logout</a></li>
               </ul>
           </section>
       </nav>
@@ -28,6 +27,8 @@
 
     <!-- Content will be injected here, in ui-view -->
     <div class="container">
+        <div ui-view="newCandidate"></div>
+        <div ui-view="list"></div>
         <div ui-view></div>
     </div>
 

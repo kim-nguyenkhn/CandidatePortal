@@ -6,7 +6,6 @@ angular.module('candidateServices', [])
     return $resource('http://localhost:3000/candidates/:id', { id: '@_id' }, {
         update: {
             method: "PUT"
-
         }
     });
 })

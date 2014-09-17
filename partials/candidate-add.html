@@ -1,21 +1,17 @@
 <!-- candidate-add.html -->
 
-<!-- Panel displaying a message  ================================ -->
-<div class="panel callout">Candidate Creation</div>
-
 <!-- Form to add a new candidate ================================ -->
 <form role="form" ng-submit="addCandidate()">
-    <div class="row">
-        <label>Name
-            <input ng-model="candidate.name" type="text" placeholder="Full name"/>
-        </label>
-    </div>
-    <div class="row">
-        <label>Email
-            <input ng-model="candidate.email" type="email" placeholder="Email address"/>
-        </label>
-    </div>
-    <div class="row">
-        <input type="submit" class="button btn_new" value="Save"/>
+    <div class="panel callout">
+        <h3>Add New Candidate</h3>
+        <div class="row">
+            <label>Name
+                <input class="inp_field" ng-model="candidate.name" type="text" placeholder="Full name"/>
+            </label>
+            <label>Email
+                <input class="inp_field" ng-model="candidate.email" type="email" placeholder="Email address"/>
+            </label>
+            <input type="submit" class="button btn_new" value="Save"/>
+        </div>
     </div>
 </form>

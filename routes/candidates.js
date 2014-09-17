@@ -19,16 +19,6 @@ var candidateSchema = mongoose.Schema({
 var Candidate = mongoose.model('Candidate', candidateSchema);
 // Model name is Candidate, database name will be candidates in MongoDB
 
-        // SWITCH THIS ON ONCE TO PUT IN JOHN CASTLE
-        /*var candidate = new CandidateModel({
-            name: "John Castle",
-            email: "john.castle@email.com"
-        });
-        candidate.save(function(err, results) {
-            if (err) console.log(err);
-            else console.log(results);
-        });*/
-
 
 // RESTful Endpoints (CRUD operations)
 

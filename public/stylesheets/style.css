@@ -6,13 +6,19 @@ a {
   color: #00B7FF;
 }
 
-div.btn_add{
-    width: 50%;
+div.container {
+    width: 80%;
+    margin: 20px auto;
+    padding: 0;
 }
 
 div.panel{
     text-align: center;
     font-size: 1.5em;
+}
+
+.btn_new{
+    top: 20px;
 }
 
 table.candidateTable {
@@ -21,4 +27,9 @@ table.candidateTable {
 
 span.can_name {
     font-style: italic;
+}
+
+label{
+    width: 40%;
+    display: inline-block;
 }
