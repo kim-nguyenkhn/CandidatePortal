@@ -1,7 +1,11 @@
-### Candidate Portal (pending)
+### Candidate Portal (working edition)
 
-              List of things pending           
-    Responsive Web Design & cleaning up appearance (Foundation)             
-    User authentication (PassportJS)
-    Shorten the MongoID to much fewer characters (candidate-view.html & controllers.js)  
-    General documentation throughout the app   
+Candidate Portal is a CRUD application implemented with:
+* AngularJS
+* Angular-UI-Router 
+* Angular-resource
+
+* Foundation
+
+* NodeJS
+* Mongoose (MongoDB)
